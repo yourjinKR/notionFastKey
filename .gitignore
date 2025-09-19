@@ -1,0 +1,49 @@
+# =========================================
+# Dependencies
+# =========================================
+# 모든 node_modules 폴더를 무시합니다 (server/, extension/ 등)
+/node_modules/
+# 특정 폴더 내의 node_modules도 모두 무시합니다
+**/node_modules
+
+# =========================================
+# Build & Package Output
+# =========================================
+# TypeScript 컴파일 결과물 (서버)
+/server/dist/
+
+# 크롬 웹 스토어에 제출할 압축 파일
+*.zip
+*.crx
+
+# =========================================
+# Secret & Environment Variables
+# =========================================
+# Notion API 키와 같은 비밀 정보를 담은 .env 파일을 무시합니다. (매우 중요)
+.env
+.env.*
+!.env.example
+
+# =========================================
+# Logs
+# =========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# =========================================
+# IDE & OS Specific
+# =========================================
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+.history
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
