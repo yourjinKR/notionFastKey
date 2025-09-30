@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>단축키 설정</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 16px; }
+    .row { margin-bottom: 12px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .kbd { padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px; min-width: 220px; }
+    .help { color: #666; font-size: 12px; margin-top: 4px; }
+    button { padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>노션 코드블록 언어 전환 단축키</h1>
+
+  <div class="row">
+    <label>현재 커스텀 단축키</label>
+    <input id="shortcutDisplay" class="kbd" type="text" readonly />
+    <div class="help">아래에서 새 단축키를 입력하면 자동으로 저장됩니다.</div>
+  </div>
+
+  <div class="row">
+    <label>새 단축키 입력</label>
+    <input id="shortcutCapture" class="kbd" type="text" placeholder="여기서 키 조합을 누르세요" />
+    <div class="help">예: Ctrl + Shift + K, Alt + C 등. F5, ESC 등 시스템 키는 피하세요.</div>
+  </div>
+
+  <div class="row">
+    <button id="clearBtn">커스텀 단축키 해제</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
