@@ -78,6 +78,27 @@
 
   // ===== 한글/별칭/한영반전 룰 (긴 패턴 우선) =====
   const KO_RULES = [
+    // ── [신규] 한/영 오타 직매핑 (사용빈도 높은 언어) ──
+    [/^(wkqk|ㅓㅁㅍㅁ)$/i, 'java'],                                   // 자바 ←→ java
+    [/^(wkqktmzmflxm|ㅓㅁㅍㅁㄴㅊ갸ㅔㅅ)$/i, 'javascript'],         // 자바스크립트 ←→ javascript
+    [/^(xkdlqtmzmflxm|쇼ㅔㄷㄴㅊ갸ㅔㅅ)$/i, 'typescript'],        // 타입스크립트 ←→ typescript
+    [/^(vkdlTJs|(?:ㅔㅛ쇄ㅜ|ㅔㅛㅅㅗㅐㅜ))$/i, 'python'],              // 파이썬 ←→ python (조합형/분해형 모두)
+    [/^(tmnlvmxm|ㄴ쟔)$/i, 'swift'],                                        // 스위프트 ←→ swift (ko→en 오타)
+    [/^(zhxmffls|ㅏㅐ시ㅑㅜ)$/i, 'kotlin'],                                       // 코틀린 ←→ kotlin (ko→en 오타)
+    [/^(fnql|겨ㅠㅛ)$/i, 'ruby'],                                             // 루비 ←→ ruby (ko→en 오타)
+    [/^(vlplclvl|ㅔㅗㅔ)$/i, 'php'],                                          // 피에이치피 ←→ php (ko→en 오타)
+    [/^(fjtmxm|견ㅅ)$/i, 'rust'],                                           // 러스트 ←→ rust (ko→en 오타)
+    [/^(tmzkffk|ㄴㅊ밈)$/i, 'scala'],                                         // 스칼라 ←→ scala (ko→en 오타)
+    [/^(gktmzpf|ㅗㅁ나디ㅣ)$/i, 'haskell'],                                       // 하스켈 ←→ haskell (ko→en 오타)
+    [/^(dpfflrtm|디ㅑ탹)$/i, 'elixir'],                                       // 엘릭서 ←→ elixir (ko→en 오타, 관용 표기 기준)
+    [/^(zmffhwj|치ㅐㅓㅕㄱㄷ)$/i, 'clojure'],                                       // 클로저 ←→ clojure (ko→en 오타)
+    [/^(ekxm|ㅇㅁㄳ)$/i, 'dart'],                                             // 다트 ←→ dart (ko→en 오타)
+    [/^(rh|해|ㅎㅐ)$/i, 'go'],                                         // 고 ←→ go (en→ko 오타 포함)
+    [/^(ㅊ)$/i, 'c'],                                                  // c (en→ko 오타: 'c'를 한글자판에서 침)
+    [/^(ㅊ\+\+|c\+\+)$/i, 'c++'],                                      // c++
+    [/^(ㅊ#|c#)$/i, 'c#'],                                             // c#
+    [/^(vmfpdls\s*xpehxm)$/i, 'plain text'],                           // 플레인 텍스트 ←→ plain text (ko→en 오타, 공백 유지)
+    
     [/씨\s*(샵|#|샾)/i, 'c#'],
     [/씨\s*(플러스\s*플러스|플플|\+\+)/i, 'c++'],
 
