@@ -1,24 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "Notion CodeBlock Language Switcher",
-  "version": "0.3.0",
-  "description": "단축키로 노션 코드 블록의 언어를 빠르게 변경합니다.",
+  "name": "Notion CodeBlock Language Helper",
+  "version": "0.4.1",
+  "description": "노션 코드 블록 언어 변경을 한글/한영반전까지 보정해 더욱 쉽게 만듭니다.",
   "permissions": ["tabs", "storage"],
-  "host_permissions": [
-    "https://www.notion.so/*",
-    "https://*.notion.site/*"
-  ],
+  "host_permissions": ["https://www.notion.so/*", "https://*.notion.site/*"],
   "background": { "service_worker": "background.js" },
   "commands": {
-    "toggle-language-dropdown": {
+    "notion-language-helper": {
       "suggested_key": { "default": "Alt+Shift+C", "mac": "Alt+Shift+C" },
-      "description": "Open the language dropdown of the current Notion code block"
+      "description": "Notion 작업 검색창을 활성화하고 언어 입력을 한글/한영 반전까지 보정해 적용"
     }
   },
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
   "content_scripts": [
     {
       "matches": ["https://www.notion.so/*", "https://*.notion.site/*"],
@@ -26,8 +20,11 @@
       "run_at": "document_idle"
     }
   ],
-  "icons": {
-    "16": "images/icon_16.png",
-    "128": "images/icon_128.png"
-  }
+  "web_accessible_resources": [
+    {
+      "resources": ["language-helper.js"],
+      "matches": ["https://www.notion.so/*", "https://*.notion.site/*"]
+    }
+  ],
+  "icons": { "16": "images/icon_16.png", "128": "images/icon_128.png" }
 }
