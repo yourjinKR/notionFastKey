@@ -1,4 +1,3 @@
-// language-helper.js (runs in page context, not in isolated world)
 (() => {
   const LOG = (...a) => console.log('[NotionLangHelper]', ...a);
 
@@ -79,26 +78,26 @@
   // ===== 한글/별칭/한영반전 룰 (긴 패턴 우선) =====
   const KO_RULES = [
     // ── [신규] 한/영 오타 직매핑 (사용빈도 높은 언어) ──
-    [/^(wkqk|ㅓㅁㅍㅁ)$/i, 'java'],                                   // 자바 ←→ java
-    [/^(wkqktmzmflxm|ㅓㅁㅍㅁㄴㅊ갸ㅔㅅ)$/i, 'javascript'],         // 자바스크립트 ←→ javascript
-    [/^(xkdlqtmzmflxm|쇼ㅔㄷㄴㅊ갸ㅔㅅ)$/i, 'typescript'],        // 타입스크립트 ←→ typescript
-    [/^(vkdlTJs|(?:ㅔㅛ쇄ㅜ|ㅔㅛㅅㅗㅐㅜ))$/i, 'python'],              // 파이썬 ←→ python (조합형/분해형 모두)
-    [/^(tmnlvmxm|ㄴ쟔)$/i, 'swift'],                                        // 스위프트 ←→ swift (ko→en 오타)
-    [/^(zhxmffls|ㅏㅐ시ㅑㅜ)$/i, 'kotlin'],                                       // 코틀린 ←→ kotlin (ko→en 오타)
-    [/^(fnql|겨ㅠㅛ)$/i, 'ruby'],                                             // 루비 ←→ ruby (ko→en 오타)
-    [/^(vlplclvl|ㅔㅗㅔ)$/i, 'php'],                                          // 피에이치피 ←→ php (ko→en 오타)
-    [/^(fjtmxm|견ㅅ)$/i, 'rust'],                                           // 러스트 ←→ rust (ko→en 오타)
-    [/^(tmzkffk|ㄴㅊ밈)$/i, 'scala'],                                         // 스칼라 ←→ scala (ko→en 오타)
-    [/^(gktmzpf|ㅗㅁ나디ㅣ)$/i, 'haskell'],                                       // 하스켈 ←→ haskell (ko→en 오타)
-    [/^(dpfflrtm|디ㅑ탹)$/i, 'elixir'],                                       // 엘릭서 ←→ elixir (ko→en 오타, 관용 표기 기준)
-    [/^(zmffhwj|치ㅐㅓㅕㄱㄷ)$/i, 'clojure'],                                       // 클로저 ←→ clojure (ko→en 오타)
-    [/^(ekxm|ㅇㅁㄳ)$/i, 'dart'],                                             // 다트 ←→ dart (ko→en 오타)
-    [/^(rh|해|ㅎㅐ)$/i, 'go'],                                         // 고 ←→ go (en→ko 오타 포함)
-    [/^(ㅊ)$/i, 'c'],                                                  // c (en→ko 오타: 'c'를 한글자판에서 침)
-    [/^(ㅊ\+\+|c\+\+)$/i, 'c++'],                                      // c++
-    [/^(ㅊ#|c#)$/i, 'c#'],                                             // c#
-    [/^(vmfpdls\s*xpehxm)$/i, 'plain text'],                           // 플레인 텍스트 ←→ plain text (ko→en 오타, 공백 유지)
-    
+    [/^(wkqk|ㅓㅁㅍㅁ)$/i, 'java'],
+    [/^(wkqktmzmflxm|ㅓㅁㅍㅁㄴㅊ갸ㅔㅅ)$/i, 'javascript'],
+    [/^(xkdlqtmzmflxm|쇼ㅔㄷㄴㅊ갸ㅔㅅ)$/i, 'typescript'],
+    [/^(vkdlTJs|(?:ㅔㅛ쇄ㅜ|ㅔㅛㅅㅗㅐㅜ))$/i, 'python'],
+    [/^(tmnlvmxm|ㄴ쟔)$/i, 'swift'],
+    [/^(zhxmffls|ㅏㅐ시ㅑㅜ)$/i, 'kotlin'],
+    [/^(fnql|겨ㅠㅛ)$/i, 'ruby'],
+    [/^(vlplclvl|ㅔㅗㅔ)$/i, 'php'],
+    [/^(fjtmxm|견ㅅ)$/i, 'rust'],
+    [/^(tmzkffk|ㄴㅊ밈)$/i, 'scala'],
+    [/^(gktmzpf|ㅗㅁ나디ㅣ)$/i, 'haskell'],
+    [/^(dpfflrtm|디ㅑ탹)$/i, 'elixir'],
+    [/^(zmffhwj|치ㅐㅓㅕㄱㄷ)$/i, 'clojure'],
+    [/^(ekxm|ㅇㅁㄳ)$/i, 'dart'],
+    [/^(rh|해|ㅎㅐ)$/i, 'go'],
+    [/^(ㅊ)$/i, 'c'],
+    [/^(ㅊ\+\+|c\+\+)$/i, 'c++'],
+    [/^(ㅊ#|c#)$/i, 'c#'],
+    [/^(vmfpdls\s*xpehxm)$/i, 'plain text'],
+
     [/씨\s*(샵|#|샾)/i, 'c#'],
     [/씨\s*(플러스\s*플러스|플플|\+\+)/i, 'c++'],
 
@@ -127,37 +126,41 @@
 
   // ===== 두벌식 간단 한영반전(영→한) 조합 =====
   const ENG_TO_JAMO = new Map(Object.entries({
-    q:'ㅂ', w:'ㅈ', e:'ㄷ', r:'ㄱ', t:'ㅅ', y:'ㅛ', u:'ㅕ', i:'ㅑ', o:'ㅐ', p:'ㅔ',
-    a:'ㅁ', s:'ㄴ', d:'ㅇ', f:'ㄹ', g:'ㅎ', h:'ㅗ', j:'ㅓ', k:'ㅏ', l:'ㅣ',
-    z:'ㅋ', x:'ㅌ', c:'ㅊ', v:'ㅍ', b:'ㅠ', n:'ㅜ', m:'ㅡ',
-    Q:'ㅃ', W:'ㅉ', E:'ㄸ', R:'ㄲ', T:'ㅆ', O:'ㅒ', P:'ㅖ'
+    q: 'ㅂ', w: 'ㅈ', e: 'ㄷ', r: 'ㄱ', t: 'ㅅ', y: 'ㅛ', u: 'ㅕ', i: 'ㅑ', o: 'ㅐ', p: 'ㅔ',
+    a: 'ㅁ', s: 'ㄴ', d: 'ㅇ', f: 'ㄹ', g: 'ㅎ', h: 'ㅗ', j: 'ㅓ', k: 'ㅏ', l: 'ㅣ',
+    z: 'ㅋ', x: 'ㅌ', c: 'ㅊ', v: 'ㅍ', b: 'ㅠ', n: 'ㅜ', m: 'ㅡ',
+    Q: 'ㅃ', W: 'ㅉ', E: 'ㄸ', R: 'ㄲ', T: 'ㅆ', O: 'ㅒ', P: 'ㅖ'
   }));
 
-  const CHO = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
-  const JUNG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
-  const JONG = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
-  const JUNG_COMB = new Map([['ㅗㅏ','ㅘ'],['ㅗㅐ','ㅙ'],['ㅗㅣ','ㅚ'],['ㅜㅓ','ㅝ'],['ㅜㅔ','ㅞ'],['ㅜㅣ','ㅟ'],['ㅡㅣ','ㅢ']]);
-  const JONG_COMB = new Map([['ㄱㅅ','ㄳ'],['ㄴㅈ','ㄵ'],['ㄴㅎ','ㄶ'],['ㄹㄱ','ㄺ'],['ㄹㅁ','ㄻ'],['ㄹㅂ','ㄼ'],['ㄹㅅ','ㄽ'],['ㄹㅌ','ㄾ'],['ㄹㅍ','ㄿ'],['ㄹㅎ','ㅀ'],['ㅂㅅ','ㅄ']]);
+  const CHO = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+  const JUNG = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'];
+  const JONG = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+  const JUNG_COMB = new Map([['ㅗㅏ', 'ㅘ'], ['ㅗㅐ', 'ㅙ'], ['ㅗㅣ', 'ㅚ'], ['ㅜㅓ', 'ㅝ'], ['ㅜㅔ', 'ㅞ'], ['ㅜㅣ', 'ㅟ'], ['ㅡㅣ', 'ㅢ']]);
+  const JONG_COMB = new Map([['ㄱㅅ', 'ㄳ'], ['ㄴㅈ', 'ㄵ'], ['ㄴㅎ', 'ㄶ'], ['ㄹㄱ', 'ㄺ'], ['ㄹㅁ', 'ㄻ'], ['ㄹㅂ', 'ㄼ'], ['ㄹㅅ', 'ㄽ'], ['ㄹㅌ', 'ㄾ'], ['ㄹㅍ', 'ㄿ'], ['ㄹㅎ', 'ㅀ'], ['ㅂㅅ', 'ㅄ']]);
 
-  function composeHangulFromJamo(jamo){
-    const out=[]; let cho='',jung='',jong='';
-    const flush=()=>{ if(cho&&jung){ const L=CHO.indexOf(cho),V=JUNG.indexOf(jung),T=JONG.indexOf(jong||'');
-      if(L>=0&&V>=0&&T>=0){ out.push(String.fromCharCode(0xAC00+(L*21+V)*28+T));}
-      else{ if(cho)out.push(cho); if(jung)out.push(jung); if(jong)out.push(jong);} }
-      else{ if(cho)out.push(cho); if(jung)out.push(jung); if(jong)out.push(jong);} cho='';jung='';jong='';};
-    for(const ch of jamo){
-      if (JUNG.includes(ch)){
+  function composeHangulFromJamo(jamo) {
+    const out = []; let cho = '', jung = '', jong = '';
+    const flush = () => {
+      if (cho && jung) {
+        const L = CHO.indexOf(cho), V = JUNG.indexOf(jung), T = JONG.indexOf(jong || '');
+        if (L >= 0 && V >= 0 && T >= 0) { out.push(String.fromCharCode(0xAC00 + (L * 21 + V) * 28 + T)); }
+        else { if (cho) out.push(cho); if (jung) out.push(jung); if (jong) out.push(jong); }
+      }
+      else { if (cho) out.push(cho); if (jung) out.push(jung); if (jong) out.push(jong); } cho = ''; jung = ''; jong = '';
+    };
+    for (const ch of jamo) {
+      if (JUNG.includes(ch)) {
         if (!cho) out.push(ch);
-        else if (!jung) jung=ch;
-        else { const comb=JUNG_COMB.get(jung+ch); if (comb) jung=comb; else { flush(); jung=ch; } }
+        else if (!jung) jung = ch;
+        else { const comb = JUNG_COMB.get(jung + ch); if (comb) jung = comb; else { flush(); jung = ch; } }
         continue;
       }
-      const isConsonant = CHO.includes(ch) || ch==='ㅇ';
-      if (isConsonant){
-        if (!cho) cho=ch;
-        else if (!jung){ out.push(cho); cho=ch; }
-        else if (!jong){ if (JONG.includes(ch)) jong=ch; else { flush(); cho=ch; } }
-        else { const comb=JONG_COMB.get(jong+ch); if (comb) jong=comb; else { flush(); cho=ch; } }
+      const isConsonant = CHO.includes(ch) || ch === 'ㅇ';
+      if (isConsonant) {
+        if (!cho) cho = ch;
+        else if (!jung) { out.push(cho); cho = ch; }
+        else if (!jong) { if (JONG.includes(ch)) jong = ch; else { flush(); cho = ch; } }
+        else { const comb = JONG_COMB.get(jong + ch); if (comb) jong = comb; else { flush(); cho = ch; } }
         continue;
       }
       flush(); out.push(ch);
@@ -165,13 +168,13 @@
     flush(); return out.join('');
   }
 
-  function engToHangulLetters(str){
-    const jamo=[]; for(const ch of str) jamo.push(ENG_TO_JAMO.get(ch)||ch);
+  function engToHangulLetters(str) {
+    const jamo = []; for (const ch of str) jamo.push(ENG_TO_JAMO.get(ch) || ch);
     return composeHangulFromJamo(jamo);
   }
 
   // 입력값을 바꾸지 않고 표준 언어명만 계산(필요 시에만 변환)
-  function normalizeLanguageQueryNoMutate(raw){
+  function normalizeLanguageQueryNoMutate(raw) {
     if (!raw) return null;
     const s = raw.trim();
 
@@ -203,7 +206,7 @@
     return dialog.querySelector('input[type="text"]');
   }
 
-  function bindSearchInput(input){
+  function bindSearchInput(input) {
     if (!input || input.__langHelperBound) return;
     input.__langHelperBound = true;
     input.focus();
